@@ -65,6 +65,7 @@ main{margin-top:-58px;padding-bottom:40px}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:#334155}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .note{font-size:12.5px;color:var(--muted);margin-top:12px}
+.illus{background:var(--surface);border-radius:10px;padding:8px 10px}
 /* reveal */
 .reveal{margin-top:18px}
 .cmp{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;text-align:center;margin:10px 0}
@@ -106,7 +107,7 @@ footer{color:#475569;font-size:12.5px;padding:6px 0 30px;text-align:center}
 <main class="wrap">
 <div class="grid">
   <section class="card" id="inputs">
-    <div class="banner" id="banner"><span>👩‍💼 Estás viendo el ejemplo de <b>Camila</b> (cifras ficticias).</span><button class="btn sm" id="clear">Usar mis números</button></div>
+    <div class="banner" id="banner"><span>👩‍💼 Estás viendo el ejemplo de <b>Camila</b> (personaje y cifras <b>ilustrativas</b>, no reales).</span><button class="btn sm" id="clear">Usar mis números</button></div>
     <h2>1. Tus números del mes</h2>
     <p class="hint">Usa tu cartola y el estado de cuenta de tu tarjeta. Si no sabes un monto, déjalo en 0.</p>
 
@@ -139,6 +140,7 @@ footer{color:#475569;font-size:12.5px;padding:6px 0 30px;text-align:center}
     <div class="waffle" id="waffle"></div>
     <div class="legend" id="legend"></div>
     <p class="note">Cada cuadrito es $1 de cada $100 que ganas.</p>
+    <p class="note illus">ℹ️ <b>Resultados ilustrativos:</b> dependen de los datos que ingreses y no son una promesa de ahorro ni asesoría financiera.</p>
   </aside>
 </div>
 
@@ -160,7 +162,7 @@ footer{color:#475569;font-size:12.5px;padding:6px 0 30px;text-align:center}
   </div>
   <div class="legend" style="margin-top:6px"><span><span class="dot" style="background:#1f8a75"></span>Con recorte</span><span><span class="dot" style="background:#64748b"></span>Sin recorte (línea punteada)</span></div>
   <div id="chart"></div>
-  <p class="note">Proyección simple: ahorro mensual × meses, <b>sin rentabilidad</b> ni inflación. Es una simulación para entender el efecto, no una promesa.</p>
+  <p class="note">Proyección simple: ahorro mensual × meses, <b>sin rentabilidad</b> ni inflación. Es una simulación <b>ilustrativa</b> para entender el efecto, no una promesa.</p>
 </section>
 
 <section class="cta">
@@ -170,7 +172,7 @@ footer{color:#475569;font-size:12.5px;padding:6px 0 30px;text-align:center}
 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px"><button class="btn" id="copy">📋 Copiar mi resultado</button><button class="btn ghost" id="share">Compartir esta herramienta</button></div>
 </main>
 
-<footer class="wrap"><p>🔒 Todo se calcula en tu navegador: no enviamos ni guardamos tus datos. Herramienta educativa; no constituye asesoría financiera personalizada.</p></footer>
+<footer class="wrap"><p>🔒 Todo se calcula en tu navegador: no enviamos ni guardamos tus datos. Los resultados, simulaciones y referencias son ilustrativos. Herramienta educativa; no constituye asesoría financiera personalizada.</p></footer>
 <div class="toast" id="toast"></div>
 
 <script>
