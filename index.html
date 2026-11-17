@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de capacidad de ahorro · Hábito Financiero</title>
+<meta name="description" content="Descubre cuánto puedes ahorrar de verdad cada mes y cuánto se te escapa en gastos invisibles. Gratis, sin registro y sin guardar tus datos.">
+<meta property="og:title" content="¿Cuánto puedes ahorrar realmente?">
+<meta property="og:description" content="Calcula tu capacidad de ahorro y descubre cuánto se te escapa en gastos invisibles. Gratis y privado.">
+<meta name="theme-color" content="#0B1D3A">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230B1D3A'/><text x='50' y='68' font-size='56' text-anchor='middle'>🌱</text></svg>">
+<style>
+:root{
+  --bg:#DDE3EC; --card:#fff; --surface:#f8fafc; --navy:#0B1D3A; --navy2:#0a1628;
+  --wine:#9B2335; --red:#c0293f; --teal:#1f8a75; --mint:#33C5A5; --amber:#d97706;
+  --text:#0B1D3A; --muted:#64748b; --line:#e2e8f0; --line2:#cbd5e1; --pale:#e8edf4;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+p{margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+/* hero */
+.hero{background:linear-gradient(160deg,var(--navy2),var(--navy) 60%,#16305a);color:#fff;padding:34px 0 86px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;opacity:.95;font-size:15px}
+.brand i{font-style:normal;background:#fff1;border-radius:10px;padding:5px 8px}
+.pill{display:inline-block;margin-top:26px;background:#ffffff1c;border:1px solid #ffffff33;border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600}
+h1{font-size:clamp(28px,5.4vw,46px);line-height:1.08;margin:14px 0 12px;font-weight:900;letter-spacing:-.02em;max-width:720px}
+h1 em{font-style:normal;color:var(--mint)}
+.sub{font-size:clamp(15px,2.4vw,18px);color:#cdd9ea;max-width:620px}
+/* layout */
+main{margin-top:-58px;padding-bottom:40px}
+.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:start}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border-radius:18px;padding:22px;box-shadow:0 4px 20px rgba(11,29,58,.09)}
+.card h2{margin:0 0 4px;font-size:19px;font-weight:800}
+.card .hint{color:var(--muted);font-size:14px;margin-bottom:14px}
+.banner{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#fff7e6;border:1px solid #f6d58f;color:#7a4b00;border-radius:12px;padding:10px 14px;font-size:14px;margin-bottom:16px}
+.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:11px 16px;cursor:pointer;background:var(--wine);color:#fff}
+.btn.ghost{background:var(--pale);color:var(--navy)}
+.btn.sm{padding:7px 12px;font-size:13px}
+.btn:active{transform:scale(.98)}
+.grp{margin:18px 0 6px;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.dot{width:12px;height:12px;border-radius:4px;display:inline-block}
+.row{display:grid;grid-template-columns:34px 1fr 150px;gap:10px;align-items:center;padding:6px 0}
+.row .e{font-size:22px;text-align:center}
+.row label{font-size:15px}
+.row small{display:block;color:var(--muted);font-size:12px}
+.money{position:relative}
+.money span{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:600}
+.money input{width:100%;font:inherit;font-weight:700;text-align:right;padding:10px 12px 10px 26px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
+.money input:focus{outline:0;border-color:var(--wine);box-shadow:0 0 0 3px #9b233522;background:#fff}
+@media(max-width:480px){.row{grid-template-columns:28px 1fr 120px}.row small{display:none}}
+.sum{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);border-top:1px dashed var(--line2);margin-top:6px;padding-top:6px}
+.sum b{color:var(--text)}
+/* resultado */
+.sticky{position:sticky;top:12px}
+@media(max-width:860px){.sticky{position:static}}
+.big{font-size:clamp(40px,8vw,58px);font-weight:900;letter-spacing:-.03em;line-height:1}
+.big.pos{color:var(--teal)} .big.neg{color:var(--red)}
+.chip{display:inline-block;border-radius:999px;padding:4px 11px;font-size:13px;font-weight:800;margin:8px 0 14px;color:#fff}
+.waffle{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin:12px 0}
+.waffle i{aspect-ratio:1;border-radius:4px;background:var(--pale);transition:background .35s,transform .35s}
+.waffle i.pop{transform:scale(1.12)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:#334155}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.note{font-size:12.5px;color:var(--muted);margin-top:12px}
+/* reveal */
+.reveal{margin-top:18px}
+.cmp{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;text-align:center;margin:10px 0}
+@media(max-width:560px){.cmp{grid-template-columns:1fr}.cmp .ar{transform:rotate(90deg)}}
+.cmp .b{background:var(--surface);border-radius:14px;padding:14px}
+.cmp .b small{display:block;color:var(--muted);font-weight:600;font-size:13px}
+.cmp .b strong{font-size:clamp(22px,4.5vw,30px);font-weight:900}
+.cmp .ar{font-size:26px;color:var(--wine);font-weight:900}
+.gap{background:var(--navy);color:#fff;border-radius:14px;padding:16px;text-align:center}
+.gap b{display:block;font-size:clamp(26px,6vw,38px);font-weight:900;color:var(--mint)}
+.gap.ok b{color:#fff}
+/* simulacion */
+.sim{margin-top:18px}
+input[type=range]{width:100%;accent-color:var(--wine);height:30px}
+.rangeVal{display:flex;justify-content:space-between;font-weight:800}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+@media(max-width:560px){.kpis{grid-template-columns:1fr}}
+.kpi{background:var(--surface);border-radius:12px;padding:12px}
+.kpi small{color:var(--muted);font-size:12.5px;display:block}
+.kpi b{font-size:20px;font-weight:900}
+svg{width:100%;height:auto;display:block}
+.cta{margin-top:18px;background:var(--navy);color:#fff;border-radius:18px;padding:24px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.cta h3{margin:0 0 4px;font-size:20px}
+.cta p{color:#cdd9ea;font-size:14.5px;max-width:560px}
+.cta a{background:var(--wine);color:#fff;text-decoration:none;font-weight:800;border-radius:12px;padding:12px 18px}
+footer{color:#475569;font-size:12.5px;padding:6px 0 30px;text-align:center}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(80px);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;font-weight:700;transition:transform .3s;z-index:9}
+.toast.on{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="brand"><i>🌱</i> Hábito Financiero</div>
+  <span class="pill">Herramienta gratuita · Cápsula 1</span>
+  <h1>¿Cuánto puedes <em>ahorrar</em> realmente cada mes?</h1>
+  <p class="sub">Ingresa tus números y descubre tu capacidad de ahorro, cuánto se te escapa en gastos invisibles y qué pasaría si recortas una parte. Dos minutos, sin registro.</p>
+</div></header>
+
+<main class="wrap">
+<div class="grid">
+  <section class="card" id="inputs">
+    <div class="banner" id="banner"><span>👩‍💼 Estás viendo el ejemplo de <b>Camila</b> (cifras ficticias).</span><button class="btn sm" id="clear">Usar mis números</button></div>
+    <h2>1. Tus números del mes</h2>
+    <p class="hint">Usa tu cartola y el estado de cuenta de tu tarjeta. Si no sabes un monto, déjalo en 0.</p>
+
+    <div class="row"><div class="e">💰</div><div><label for="ingreso">Ingreso líquido mensual</label><small>Lo que llega a tu cuenta</small></div><div class="money"><span>$</span><input id="ingreso" inputmode="numeric" autocomplete="off"></div></div>
+    <div class="row"><div class="e">🤔</div><div><label for="creido">¿Cuánto <b>crees</b> que gastas al mes?</label><small>Anótalo antes de llenar el resto</small></div><div class="money"><span>$</span><input id="creido" inputmode="numeric" autocomplete="off"></div></div>
+
+    <div class="grp"><span class="dot" style="background:var(--navy)"></span> Gastos visibles</div>
+    <div class="row"><div class="e">🏠</div><label for="vivienda">Arriendo o dividendo</label><div class="money"><span>$</span><input id="vivienda" inputmode="numeric" autocomplete="off"></div></div>
+    <div class="row"><div class="e">🛒</div><label for="alimentacion">Supermercado y feria</label><div class="money"><span>$</span><input id="alimentacion" inputmode="numeric" autocomplete="off"></div></div>
+    <div class="row"><div class="e">🚌</div><label for="transporte">Transporte</label><div class="money"><span>$</span><input id="transporte" inputmode="numeric" autocomplete="off"></div></div>
+    <div class="row"><div class="e">💡</div><label for="cuentas">Cuentas: luz, agua, gas, internet, celular</label><div class="money"><span>$</span><input id="cuentas" inputmode="numeric" autocomplete="off"></div></div>
+
+    <div class="grp"><span class="dot" style="background:var(--wine)"></span> Gastos invisibles</div>
+    <div class="row"><div class="e">📺</div><label for="suscripciones">Suscripciones</label><div class="money"><span>$</span><input id="suscripciones" inputmode="numeric" autocomplete="off"></div></div>
+    <div class="row"><div class="e">🍔</div><label for="delivery">Delivery y comida fuera</label><div class="money"><span>$</span><input id="delivery" inputmode="numeric" autocomplete="off"></div></div>
+    <div class="row"><div class="e">🛍️</div><div><label for="impulso">Compras por impulso y gastos hormiga</label><small>Cafés, compras online, antojos</small></div><div class="money"><span>$</span><input id="impulso" inputmode="numeric" autocomplete="off"></div></div>
+    <div class="row"><div class="e">🏦</div><label for="comisiones">Comisiones e intereses</label><div class="money"><span>$</span><input id="comisiones" inputmode="numeric" autocomplete="off"></div></div>
+
+    <div class="grp"><span class="dot" style="background:var(--amber)"></span> Lo que no logras identificar</div>
+    <div class="row"><div class="e">❓</div><div><label for="sinid">Sin identificar</label><small>Gasto real sin explicación</small></div><div class="money"><span>$</span><input id="sinid" inputmode="numeric" autocomplete="off"></div></div>
+    <div class="sum"><span>Total de gastos</span><b id="totG">$0</b></div>
+  </section>
+
+  <aside class="card sticky" id="result" aria-live="polite">
+    <h2>2. Tu capacidad de ahorro</h2>
+    <p class="hint">Lo que queda cada mes después de todos tus gastos.</p>
+    <div class="big" id="ahorro">$0</div>
+    <span class="chip" id="chip">—</span>
+    <p id="pct" style="margin:-6px 0 6px;color:var(--muted);font-size:14px"></p>
+    <div class="waffle" id="waffle"></div>
+    <div class="legend" id="legend"></div>
+    <p class="note">Cada cuadrito es $1 de cada $100 que ganas.</p>
+  </aside>
+</div>
+
+<section class="card reveal" id="reveal">
+  <h2>3. Lo que creías vs. lo que pasa</h2>
+  <p class="hint">Casi todos subestimamos lo que gastamos, porque la memoria recuerda lo grande y olvida lo que se repite.</p>
+  <div id="revealBody"></div>
+</section>
+
+<section class="card sim">
+  <h2>4. ¿Y si recortas tus gastos invisibles?</h2>
+  <p class="hint">Mueve la barra para ver cuánto podrías liberar sin tocar tus gastos visibles.</p>
+  <div class="rangeVal"><span>Recortar</span><span id="rv">30%</span></div>
+  <input type="range" id="recorte" min="0" max="60" step="5" value="30" aria-label="Porcentaje de recorte de gastos invisibles">
+  <div class="kpis">
+    <div class="kpi"><small>Liberas al mes</small><b id="kLib">$0</b></div>
+    <div class="kpi"><small>Ahorro mensual con el recorte</small><b id="kMes">$0</b></div>
+    <div class="kpi"><small>Acumulado en 12 meses</small><b id="kAnio">$0</b></div>
+  </div>
+  <div class="legend" style="margin-top:6px"><span><span class="dot" style="background:#1f8a75"></span>Con recorte</span><span><span class="dot" style="background:#64748b"></span>Sin recorte (línea punteada)</span></div>
+  <div id="chart"></div>
+  <p class="note">Proyección simple: ahorro mensual × meses, <b>sin rentabilidad</b> ni inflación. Es una simulación para entender el efecto, no una promesa.</p>
+</section>
+
+<section class="cta">
+  <div><h3>Ya conoces tu punto de partida</h3><p>Esta calculadora es parte del <b>Kit para reducir el estrés financiero</b>. Síguenos para recibir el curso y las siguientes herramientas.</p></div>
+  <a href="https://www.instagram.com/tuhabitofinanciero_/" target="_blank" rel="noopener">@tuhabitofinanciero_</a>
+</section>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px"><button class="btn" id="copy">📋 Copiar mi resultado</button><button class="btn ghost" id="share">Compartir esta herramienta</button></div>
+</main>
+
+<footer class="wrap"><p>🔒 Todo se calcula en tu navegador: no enviamos ni guardamos tus datos. Herramienta educativa; no constituye asesoría financiera personalizada.</p></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const IDS = ['ingreso','creido','vivienda','alimentacion','transporte','cuentas','suscripciones','delivery','impulso','comisiones','sinid'];
+const EJEMPLO = {ingreso:1500000,creido:930000,vivienda:450000,alimentacion:280000,transporte:90000,cuentas:110000,suscripciones:38000,delivery:120000,impulso:155000,comisiones:17000,sinid:240000};
+const fmt = n => (n < 0 ? '-$' : '$') + Math.abs(Math.round(n)).toLocaleString('es-CL');
+const val = id => parseInt(($(id).value || '').replace(/\D/g, ''), 10) || 0;
+let ejemploActivo = true;
+
+function setVal(id, n){ $(id).value = n ? n.toLocaleString('es-CL') : ''; }
+function loadExample(){ IDS.forEach(i => setVal(i, EJEMPLO[i])); ejemploActivo = true; $('banner').style.display = 'flex'; render(); }
+
+IDS.forEach(id => {
+  $(id).addEventListener('input', e => {
+    const el = e.target, before = el.value.slice(0, el.selectionStart).replace(/\D/g, '').length;
+    const n = parseInt(el.value.replace(/\D/g, ''), 10) || 0;
+    el.value = n ? n.toLocaleString('es-CL') : '';
+    let pos = 0, seen = 0;
+    while (pos < el.value.length && seen < before) { if (/\d/.test(el.value[pos])) seen++; pos++; }
+    el.setSelectionRange(pos, pos);
+    if (ejemploActivo) { ejemploActivo = false; $('banner').style.display = 'none'; }
+    render();
+  });
+});
+$('clear').onclick = () => { IDS.forEach(i => $(i).value = ''); ejemploActivo = false; $('banner').style.display = 'none'; render(); $('ingreso').focus(); };
+$('recorte').addEventListener('input', render);
+
+let shown = 0, raf;
+function countTo(target){
+  cancelAnimationFrame(raf); const from = shown, t0 = performance.now();
+  const step = t => { const k = Math.min(1, (t - t0) / 600), e = 1 - Math.pow(1 - k, 3);
+    shown = from + (target - from) * e; $('ahorro').textContent = fmt(shown); if (k < 1) raf = requestAnimationFrame(step); else shown = target; };
+  raf = requestAnimationFrame(step);
+}
+
+function largestRemainder(parts, total){
+  const sum = parts.reduce((a, b) => a + b.v, 0) || 1;
+  const raw = parts.map(p => ({...p, q: p.v / sum * total}));
+  raw.forEach(p => p.n = Math.floor(p.q));
+  let left = total - raw.reduce((a, p) => a + p.n, 0);
+  raw.slice().sort((a, b) => (b.q - b.n) - (a.q - a.n)).forEach(p => { if (left > 0 && p.v > 0) { p.n++; left--; } });
+  return raw;
+}
+
+function render(){
+  const v = Object.fromEntries(IDS.map(i => [i, val(i)]));
+  const vis = v.vivienda + v.alimentacion + v.transporte + v.cuentas;
+  const inv = v.suscripciones + v.delivery + v.impulso + v.comisiones;
+  const gastos = vis + inv + v.sinid;
+  const base = v.ingreso - gastos;
+  const r = +$('recorte').value / 100, lib = inv * r, after = base + lib;
+  $('totG').textContent = fmt(gastos); $('rv').textContent = Math.round(r * 100) + '%';
+
+  // resultado principal
+  const big = $('ahorro'); big.className = 'big ' + (base >= 0 ? 'pos' : 'neg');
+  countTo(base);
+  const pct = v.ingreso ? base / v.ingreso * 100 : 0;
+  let lab, col;
+  if (!v.ingreso) { lab = 'Ingresa tu ingreso'; col = '#64748b'; }
+  else if (base < 0) { lab = 'Gastas más de lo que ganas'; col = 'var(--red)'; }
+  else if (pct < 10) { lab = 'Ajustado: hay poco margen'; col = 'var(--amber)'; }
+  else if (pct < 20) { lab = 'En camino'; col = 'var(--teal)'; }
+  else { lab = 'Buen ritmo de ahorro'; col = 'var(--teal)'; }
+  $('chip').textContent = lab; $('chip').style.background = col;
+  $('pct').textContent = v.ingreso ? (base >= 0 ? `Es el ${pct.toFixed(0)}% de tu ingreso. Referencia orientativa: ahorrar cerca del 20%.` : `Te faltan ${fmt(-base)} cada mes para cubrir tus gastos.`) : '';
+
+  // waffle
+  let parts;
+  if (!v.ingreso) parts = [];
+  else if (base < 0) parts = [{k:'vis',v:vis},{k:'inv',v:inv},{k:'sin',v:v.sinid}];
+  else parts = [{k:'vis',v:vis},{k:'inv',v:inv - lib},{k:'sin',v:v.sinid},{k:'ah',v:Math.max(0, base)},{k:'lib',v:lib}];
+  const C = {vis:['#0B1D3A','Visibles'],inv:['#9B2335','Invisibles'],sin:['#d97706','Sin identificar'],ah:['#1f8a75','Ahorro'],lib:['#33C5A5','Liberado con el recorte']};
+  const counts = largestRemainder(parts, 100), cells = [];
+  counts.forEach(p => { for (let i = 0; i < p.n; i++) cells.push(p.k); });
+  const w = $('waffle');
+  if (!w.children.length) for (let i = 0; i < 100; i++) w.appendChild(document.createElement('i'));
+  [...w.children].forEach((el, i) => { const k = cells[i], c = k ? C[k][0] : ''; if (el.dataset.k !== (k || '')) { el.dataset.k = k || ''; el.style.background = c; el.classList.add('pop'); setTimeout(() => el.classList.remove('pop'), 350); } });
+  $('legend').innerHTML = counts.filter(p => p.v > 0).map(p => `<span><span class="dot" style="background:${C[p.k][0]}"></span>${C[p.k][1]} · ${fmt(p.k === 'inv' && base >= 0 ? inv - lib : p.v)}</span>`).join('');
+
+  // revelación
+  const cre = v.creido, gap = gastos - cre;
+  let rb;
+  if (!cre || !gastos) rb = '<p class="hint" style="margin:0">Anota cuánto crees que gastas y llena tus gastos para ver la diferencia.</p>';
+  else if (gap > 0) rb = `<div class="cmp"><div class="b"><small>Creías gastar</small><strong>${fmt(cre)}</strong></div><div class="ar">→</div><div class="b"><small>En realidad gastas</small><strong style="color:var(--wine)">${fmt(gastos)}</strong></div></div>
+    <div class="gap"><small>Gastos que no estaban en tu cabeza</small><b>${fmt(gap)} al mes</b>${v.ingreso ? `<small>${(gap / v.ingreso * 100).toFixed(0)}% de tu ingreso · ${fmt(gap * 12)} al año</small>` : ''}</div>`;
+  else rb = `<div class="gap ok"><small>Tu estimación vs. la realidad</small><b>¡Muy buen ojo!</b><small>Estás dentro de ${fmt(Math.abs(gap))} de lo que realmente gastas.</small></div>`;
+  $('revealBody').innerHTML = rb;
+
+  // simulación
+  $('kLib').textContent = fmt(lib); $('kMes').textContent = fmt(after); $('kAnio').textContent = fmt(after * 12);
+  chart(base, after);
+}
+
+function chart(base, after){
+  const W = 640, H = 240, L = 54, R = 16, T = 18, B = 30;
+  const f = (m, s) => s * m, ys = [0, base * 12, after * 12];
+  let lo = Math.min(...ys), hi = Math.max(...ys); if (hi === lo) hi = lo + 1;
+  const pad = (hi - lo) * .12; lo -= lo < 0 ? pad : 0; hi += pad;
+  const X = m => L + (W - L - R) * m / 12, Y = n => T + (H - T - B) * (1 - (n - lo) / (hi - lo));
+  const pts = s => Array.from({length: 13}, (_, m) => `${X(m).toFixed(1)},${Y(s * m).toFixed(1)}`).join(' ');
+  const grid = [0, .5, 1].map(k => { const n = lo + (hi - lo) * k; return `<line x1="${L}" x2="${W - R}" y1="${Y(n)}" y2="${Y(n)}" stroke="#e2e8f0"/><text x="${L - 6}" y="${Y(n) + 4}" text-anchor="end" font-size="11" fill="#64748b">${fmtShort(n)}</text>`; }).join('');
+  const xs = [0, 3, 6, 9, 12].map(m => `<text x="${X(m)}" y="${H - 8}" text-anchor="middle" font-size="11" fill="#64748b">${m ? 'mes ' + m : 'hoy'}</text>`).join('');
+  const zero = lo < 0 ? `<line x1="${L}" x2="${W - R}" y1="${Y(0)}" y2="${Y(0)}" stroke="#94a3b8" stroke-dasharray="4 3"/>` : '';
+  const area = `${X(0)},${Y(0)} ${pts(after)} ${X(12)},${Y(0)}`;
+  $('chart').innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Ahorro acumulado en 12 meses">${grid}${zero}${xs}
+    <polygon points="${area}" fill="#33C5A5" opacity=".18"/>
+    <polyline points="${pts(base)}" fill="none" stroke="#64748b" stroke-width="2.5" stroke-dasharray="6 4"/>
+    <polyline points="${pts(after)}" fill="none" stroke="#1f8a75" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="${X(12)}" cy="${Y(after * 12)}" r="5" fill="#1f8a75"/><circle cx="${X(12)}" cy="${Y(base * 12)}" r="4" fill="#64748b"/>
+    </svg>`;
+}
+function fmtShort(n){ const a = Math.abs(n), s = n < 0 ? '-' : ''; return a >= 1e6 ? s + '$' + (a / 1e6).toFixed(1).replace('.', ',') + ' M' : a >= 1e3 ? s + '$' + Math.round(a / 1e3) + ' mil' : s + '$' + Math.round(a); }
+
+function toast(m){ const t = $('toast'); t.textContent = m; t.classList.add('on'); setTimeout(() => t.classList.remove('on'), 2200); }
+$('copy').onclick = async () => {
+  const v = Object.fromEntries(IDS.map(i => [i, val(i)]));
+  const gastos = IDS.slice(2).reduce((a, i) => a + v[i], 0), base = v.ingreso - gastos;
+  const txt = `Mi capacidad de ahorro es ${fmt(base)} al mes${v.ingreso ? ` (${(base / v.ingreso * 100).toFixed(0)}% de mi ingreso)` : ''}. Calcula la tuya: ${location.href.split('#')[0]}`;
+  try { await navigator.clipboard.writeText(txt); toast('Resultado copiado'); } catch { toast('No se pudo copiar'); }
+};
+$('share').onclick = async () => {
+  const data = {title: '¿Cuánto puedes ahorrar realmente?', text: 'Calcula tu capacidad de ahorro y descubre cuánto se te escapa en gastos invisibles.', url: location.href.split('#')[0]};
+  if (navigator.share) { try { await navigator.share(data); } catch {} } else { try { await navigator.clipboard.writeText(data.url); toast('Enlace copiado'); } catch { toast(data.url); } }
+};
+loadExample();
+</script>
+</body>
+</html>
